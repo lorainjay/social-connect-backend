@@ -38,8 +38,4 @@ public class RedisWorker {
         //拼接并返回
         return timestamp<<COUNT_BITS|count;
     }
-
-
-
-
 }

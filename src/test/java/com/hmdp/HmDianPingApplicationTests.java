@@ -1,7 +1,10 @@
 package com.hmdp;
 
+import com.hmdp.dto.Result;
 import com.hmdp.entity.Shop;
+import com.hmdp.entity.ShopType;
 import com.hmdp.service.IShopService;
+import com.hmdp.service.IShopTypeService;
 import com.hmdp.service.impl.ShopServiceImpl;
 import com.hmdp.utils.CacheClient;
 import com.hmdp.utils.RedisConstants;
@@ -32,6 +35,8 @@ class HmDianPingApplicationTests {
     ShopServiceImpl shopService;
 
     @Resource
+    IShopTypeService typeService;
+    @Resource
     RedisWorker redisWorker;
     @Resource
     StringRedisTemplate stringRedisTemplate;
@@ -60,6 +65,10 @@ class HmDianPingApplicationTests {
         latch.await();
         long end = System.currentTimeMillis();
         System.out.println("time = " + (end - begin));
+    }
+    @Test
+    void queryTypeList() {
+        System.out.println(typeService.queryTypeList());
     }
 
     @Test
@@ -103,5 +112,6 @@ class HmDianPingApplicationTests {
         Long count = stringRedisTemplate.opsForHyperLogLog().size("hl2");
         System.out.println("count = " + count);
     }
+
 
 }
