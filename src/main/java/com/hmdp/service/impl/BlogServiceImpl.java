@@ -55,7 +55,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         // 根据用户查询
         Page<Blog> page = query()
                 .orderByDesc("liked")
-                .page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));
+                .page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));// 查询第1页的数，展示的数量为MAX_PAGE_SIZE
         // 获取当前页数据
         List<Blog> records = page.getRecords();
         // 查询用户

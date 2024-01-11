@@ -46,7 +46,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         // 调用封装的Redis工具
         CacheClient cacheClient = new CacheClient(stringRedisTemplate);
 
-        Shop shop = cacheClient.queryWithThrough(CACHE_SHOP_KEY,id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
+        Shop shop = cacheClient.queryWithThrough(CACHE_SHOP_KEY,id, Shop.class, this ::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);
 //1
 //        Shop shop = cacheClient.queryWithLogicalExpire(CACHE_SHOP_KEY,id, Shop.class, this::getById, CACHE_SHOP_TTL, TimeUnit.SECONDS);
         if(shop == null)
@@ -73,7 +73,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 //        String lock_key = "lock:shop"+key;
 //        boolean flag = tryLock(lock_key);
 //        // 1.1 判断是否获取锁
-//        //1.2 没有获得互斥锁=>  休眠
+//        // 1.2 没有获得互斥锁=>  休眠
 //        Shop shop = null;
 //        try {
 //            if (!flag){

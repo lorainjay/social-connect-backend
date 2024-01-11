@@ -84,7 +84,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
 
         List<Long> ids = intersect.stream().map(Long::valueOf).collect(Collectors.toList());
         // 4.查询用户
-        List<UserDTO> users = userService.listByIds(ids).stream()
+        List<UserDTO> users = userService.listByIds(ids).stream() // 查出一组user数据
                 .map(user -> BeanUtil.copyProperties(user, UserDTO.class))
                 .collect(Collectors.toList());
         return Result.ok(users);

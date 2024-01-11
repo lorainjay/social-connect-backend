@@ -87,6 +87,9 @@ public class ShopController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "current", defaultValue = "1") Integer current
     ) {
+//        第一个参数：条件判断，如果为真（即 name 不为空），则执行模糊查询，否则不添加该条件。
+//        第二个参数：数据库表字段的名称，这里是 "name"。
+//        第三个参数：模糊查询的值，即变量 name 的值。
         // 根据类型分页查询
         Page<Shop> page = shopService.query()
                 .like(StrUtil.isNotBlank(name), "name", name)
