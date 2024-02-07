@@ -9,7 +9,7 @@ spring:
     username: root
     password: Capper636.
   redis:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
     lettuce:
       pool:
@@ -20,6 +20,24 @@ spring:
     database: 3
   jackson:
     default-property-inclusion: non_null # JSON处理时忽略非空字段
+    # rabbitmq配置
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          multiplier: 2
+          max-attempts: 5
+          initial-interval: 1000ms
+          max-interval: 2000ms
+        acknowledge-mode: auto
+    port: 5672
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    virtual-host: /
+
 mybatis-plus:
   type-aliases-package: com.hmdp.entity # 别名扫描包
 logging:
