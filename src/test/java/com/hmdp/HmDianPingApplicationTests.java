@@ -1,5 +1,8 @@
 package com.hmdp;
 
+import cn.hutool.Hutool;
+import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.IdUtil;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.Shop;
 import com.hmdp.entity.ShopType;
@@ -16,9 +19,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,6 +41,7 @@ class HmDianPingApplicationTests {
     RedisWorker redisWorker;
     @Resource
     StringRedisTemplate stringRedisTemplate;
+
 
     ExecutorService es = Executors.newFixedThreadPool(500);
     @Test
@@ -96,6 +98,8 @@ class HmDianPingApplicationTests {
             stringRedisTemplate.opsForGeo().add(key, locations);
         }
     }
+
+
     @Test
     void testHyperLogLog() {
         String[] values = new String[1000];
@@ -112,6 +116,35 @@ class HmDianPingApplicationTests {
         Long count = stringRedisTemplate.opsForHyperLogLog().size("hl2");
         System.out.println("count = " + count);
     }
+
+
+    public static long snowflake(){
+        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
+        return snowflake.nextId();
+    }
+
+    private static final Date EPOC = new Date(2024, 1, 1);
+
+
+    private long nextId(int workID, int dateCenter){
+        // 创建 Snowflake 对象，传入参数包括起始时间（EPOC）、工作机器 ID（workID）、数据中心 ID（dateCenter）、是否使用反转的方式生成 ID
+        Snowflake snowflake = new Snowflake(EPOC, workID, dateCenter, false);
+        // 调用 Snowflake 对象的 nextId 方法生成下一个唯一标识符
+        return snowflake.nextId();
+    }
+
+    /**
+     * 测试雪花算法
+     */
+    @Test
+    void testSlowFlake(){
+
+        for (int i = 0; i < 10; i++) {
+            snowflake();
+        }
+
+    }
+
 
 
 }

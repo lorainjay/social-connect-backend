@@ -3,6 +3,7 @@ package com.hmdp.utils;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.hmdp.dto.UserDTO;
+import com.hmdp.mdc.MdcUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -33,9 +34,10 @@ public class RefreshIntercepter implements HandlerInterceptor {
             return true;
         }
         UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap, new UserDTO(),false);
-
         //保存
         UserHolder.saveUser(userDTO);
+        // 添加存储每个线程的诊断信息
+        MdcUtil.addTraceId();
         // 刷新token有效期
         stringRedisTemplate.expire(RedisConstants.LOGIN_USER_KEY, RedisConstants.LOGIN_USER_TTL, TimeUnit.MINUTES);
         //放行
