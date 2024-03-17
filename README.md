@@ -3,7 +3,7 @@
 SocialConnect一个以用户点评和商户信息为主要内容的本地生活服务平台，基于SpringBoot实现了登录注册、点赞等功能能。项目注重利用Redis的特性解决不同业务业务场暴中的问题，核心工作包括设计并实现缓存更新策略，解决缓存击穿、缓存穿透等问题，解决优惠券超卖的线程安全问题，并基于Redis实现分布式锁。
 ## 架构图
 ![image](https://github.com/axdmdYJ/social-connect-backend/assets/121956515/68de3479-9cf7-4965-aeb4-3b528509dfba)
-##
+## 项目目录
 ```
 ├── README.md
 ├── pom.xml
